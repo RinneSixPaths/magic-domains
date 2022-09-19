@@ -8,6 +8,7 @@ import type {
   CallOverrides,
   ContractTransaction,
   Overrides,
+  PayableOverrides,
   PopulatedTransaction,
   Signer,
   utils,
@@ -27,9 +28,11 @@ export interface DomainsInterface extends utils.Interface {
     "domains(string)": FunctionFragment;
     "getAddress(string)": FunctionFragment;
     "getRecord(string)": FunctionFragment;
+    "price(string)": FunctionFragment;
     "records(string)": FunctionFragment;
     "register(string)": FunctionFragment;
     "setRecord(string,string)": FunctionFragment;
+    "tld()": FunctionFragment;
   };
 
   getFunction(
@@ -37,9 +40,11 @@ export interface DomainsInterface extends utils.Interface {
       | "domains"
       | "getAddress"
       | "getRecord"
+      | "price"
       | "records"
       | "register"
       | "setRecord"
+      | "tld"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -55,6 +60,10 @@ export interface DomainsInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "price",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "records",
     values: [PromiseOrValue<string>]
   ): string;
@@ -66,13 +75,16 @@ export interface DomainsInterface extends utils.Interface {
     functionFragment: "setRecord",
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: "tld", values?: undefined): string;
 
   decodeFunctionResult(functionFragment: "domains", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getAddress", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getRecord", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "price", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "records", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "register", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "setRecord", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "tld", data: BytesLike): Result;
 
   events: {};
 }
@@ -119,6 +131,11 @@ export interface Domains extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    price(
+      name: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     records(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -126,7 +143,7 @@ export interface Domains extends BaseContract {
 
     register(
       name: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setRecord(
@@ -134,6 +151,8 @@ export interface Domains extends BaseContract {
       record: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    tld(overrides?: CallOverrides): Promise<[string]>;
   };
 
   domains(
@@ -151,6 +170,11 @@ export interface Domains extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
+  price(
+    name: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   records(
     arg0: PromiseOrValue<string>,
     overrides?: CallOverrides
@@ -158,7 +182,7 @@ export interface Domains extends BaseContract {
 
   register(
     name: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setRecord(
@@ -166,6 +190,8 @@ export interface Domains extends BaseContract {
     record: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
+
+  tld(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     domains(
@@ -183,6 +209,11 @@ export interface Domains extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
+    price(
+      name: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     records(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -198,6 +229,8 @@ export interface Domains extends BaseContract {
       record: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    tld(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {};
@@ -218,6 +251,11 @@ export interface Domains extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    price(
+      name: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     records(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -225,7 +263,7 @@ export interface Domains extends BaseContract {
 
     register(
       name: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setRecord(
@@ -233,6 +271,8 @@ export interface Domains extends BaseContract {
       record: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
+
+    tld(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -251,6 +291,11 @@ export interface Domains extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    price(
+      name: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     records(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -258,7 +303,7 @@ export interface Domains extends BaseContract {
 
     register(
       name: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setRecord(
@@ -266,5 +311,7 @@ export interface Domains extends BaseContract {
       record: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
+
+    tld(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }
