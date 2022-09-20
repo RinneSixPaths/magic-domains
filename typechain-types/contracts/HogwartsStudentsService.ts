@@ -26,7 +26,7 @@ import type {
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../../common";
+} from "../common";
 
 export interface HogwartsStudentsServiceInterface extends utils.Interface {
   functions: {
@@ -34,23 +34,35 @@ export interface HogwartsStudentsServiceInterface extends utils.Interface {
     "balanceOf(address)": FunctionFragment;
     "domains(string)": FunctionFragment;
     "getAddress(string)": FunctionFragment;
+    "getAllNames()": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "getRecord(string)": FunctionFragment;
+    "gryffindorColor()": FunctionFragment;
+    "gryffindorSld()": FunctionFragment;
+    "hufflepuffColor()": FunctionFragment;
+    "hufflepuffSld()": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
+    "isOwner()": FunctionFragment;
     "name()": FunctionFragment;
+    "names(uint256)": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
-    "price(string)": FunctionFragment;
+    "ravenclawColor()": FunctionFragment;
+    "ravenclawSld()": FunctionFragment;
     "records(string)": FunctionFragment;
-    "register(string)": FunctionFragment;
+    "register(string,uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,bytes)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
     "setRecord(string,string)": FunctionFragment;
+    "slytherinColor()": FunctionFragment;
+    "slytherinSld()": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
     "tld()": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
+    "valid(string)": FunctionFragment;
+    "withdraw()": FunctionFragment;
   };
 
   getFunction(
@@ -59,23 +71,35 @@ export interface HogwartsStudentsServiceInterface extends utils.Interface {
       | "balanceOf"
       | "domains"
       | "getAddress"
+      | "getAllNames"
       | "getApproved"
       | "getRecord"
+      | "gryffindorColor"
+      | "gryffindorSld"
+      | "hufflepuffColor"
+      | "hufflepuffSld"
       | "isApprovedForAll"
+      | "isOwner"
       | "name"
+      | "names"
       | "ownerOf"
-      | "price"
+      | "ravenclawColor"
+      | "ravenclawSld"
       | "records"
       | "register"
       | "safeTransferFrom(address,address,uint256)"
       | "safeTransferFrom(address,address,uint256,bytes)"
       | "setApprovalForAll"
       | "setRecord"
+      | "slytherinColor"
+      | "slytherinSld"
       | "supportsInterface"
       | "symbol"
       | "tld"
       | "tokenURI"
       | "transferFrom"
+      | "valid"
+      | "withdraw"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -95,6 +119,10 @@ export interface HogwartsStudentsServiceInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "getAllNames",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "getApproved",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
@@ -103,17 +131,42 @@ export interface HogwartsStudentsServiceInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "gryffindorColor",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "gryffindorSld",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "hufflepuffColor",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "hufflepuffSld",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "isApprovedForAll",
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: "isOwner", values?: undefined): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "names",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
   encodeFunctionData(
     functionFragment: "ownerOf",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "price",
-    values: [PromiseOrValue<string>]
+    functionFragment: "ravenclawColor",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "ravenclawSld",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "records",
@@ -121,7 +174,7 @@ export interface HogwartsStudentsServiceInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "register",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "safeTransferFrom(address,address,uint256)",
@@ -149,6 +202,14 @@ export interface HogwartsStudentsServiceInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "slytherinColor",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "slytherinSld",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "supportsInterface",
     values: [PromiseOrValue<BytesLike>]
   ): string;
@@ -166,23 +227,57 @@ export interface HogwartsStudentsServiceInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>
     ]
   ): string;
+  encodeFunctionData(
+    functionFragment: "valid",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: "withdraw", values?: undefined): string;
 
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "domains", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getAddress", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "getAllNames",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "getApproved",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "getRecord", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "gryffindorColor",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "gryffindorSld",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "hufflepuffColor",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "hufflepuffSld",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "isApprovedForAll",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "isOwner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "names", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "price", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "ravenclawColor",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "ravenclawSld",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "records", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "register", data: BytesLike): Result;
   decodeFunctionResult(
@@ -199,6 +294,14 @@ export interface HogwartsStudentsServiceInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "setRecord", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "slytherinColor",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "slytherinSld",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "supportsInterface",
     data: BytesLike
   ): Result;
@@ -209,6 +312,8 @@ export interface HogwartsStudentsServiceInterface extends utils.Interface {
     functionFragment: "transferFrom",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "valid", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
@@ -305,6 +410,8 @@ export interface HogwartsStudentsService extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    getAllNames(overrides?: CallOverrides): Promise<[string[]]>;
+
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -315,23 +422,37 @@ export interface HogwartsStudentsService extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    gryffindorColor(overrides?: CallOverrides): Promise<[string]>;
+
+    gryffindorSld(overrides?: CallOverrides): Promise<[string]>;
+
+    hufflepuffColor(overrides?: CallOverrides): Promise<[string]>;
+
+    hufflepuffSld(overrides?: CallOverrides): Promise<[string]>;
+
     isApprovedForAll(
       owner: PromiseOrValue<string>,
       operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
+    isOwner(overrides?: CallOverrides): Promise<[boolean]>;
+
     name(overrides?: CallOverrides): Promise<[string]>;
+
+    names(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
 
     ownerOf(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    price(
-      name: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ravenclawColor(overrides?: CallOverrides): Promise<[string]>;
+
+    ravenclawSld(overrides?: CallOverrides): Promise<[string]>;
 
     records(
       arg0: PromiseOrValue<string>,
@@ -340,6 +461,7 @@ export interface HogwartsStudentsService extends BaseContract {
 
     register(
       name: PromiseOrValue<string>,
+      nonce: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -370,6 +492,10 @@ export interface HogwartsStudentsService extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    slytherinColor(overrides?: CallOverrides): Promise<[string]>;
+
+    slytherinSld(overrides?: CallOverrides): Promise<[string]>;
+
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
@@ -388,6 +514,15 @@ export interface HogwartsStudentsService extends BaseContract {
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    valid(
+      name: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
+    withdraw(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
@@ -413,6 +548,8 @@ export interface HogwartsStudentsService extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
+  getAllNames(overrides?: CallOverrides): Promise<string[]>;
+
   getApproved(
     tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -423,23 +560,37 @@ export interface HogwartsStudentsService extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
+  gryffindorColor(overrides?: CallOverrides): Promise<string>;
+
+  gryffindorSld(overrides?: CallOverrides): Promise<string>;
+
+  hufflepuffColor(overrides?: CallOverrides): Promise<string>;
+
+  hufflepuffSld(overrides?: CallOverrides): Promise<string>;
+
   isApprovedForAll(
     owner: PromiseOrValue<string>,
     operator: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
+  isOwner(overrides?: CallOverrides): Promise<boolean>;
+
   name(overrides?: CallOverrides): Promise<string>;
+
+  names(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
 
   ownerOf(
     tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<string>;
 
-  price(
-    name: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  ravenclawColor(overrides?: CallOverrides): Promise<string>;
+
+  ravenclawSld(overrides?: CallOverrides): Promise<string>;
 
   records(
     arg0: PromiseOrValue<string>,
@@ -448,6 +599,7 @@ export interface HogwartsStudentsService extends BaseContract {
 
   register(
     name: PromiseOrValue<string>,
+    nonce: PromiseOrValue<BigNumberish>,
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -478,6 +630,10 @@ export interface HogwartsStudentsService extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  slytherinColor(overrides?: CallOverrides): Promise<string>;
+
+  slytherinSld(overrides?: CallOverrides): Promise<string>;
+
   supportsInterface(
     interfaceId: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
@@ -496,6 +652,15 @@ export interface HogwartsStudentsService extends BaseContract {
     from: PromiseOrValue<string>,
     to: PromiseOrValue<string>,
     tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  valid(
+    name: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
+  withdraw(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -521,6 +686,8 @@ export interface HogwartsStudentsService extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
+    getAllNames(overrides?: CallOverrides): Promise<string[]>;
+
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -531,23 +698,37 @@ export interface HogwartsStudentsService extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
+    gryffindorColor(overrides?: CallOverrides): Promise<string>;
+
+    gryffindorSld(overrides?: CallOverrides): Promise<string>;
+
+    hufflepuffColor(overrides?: CallOverrides): Promise<string>;
+
+    hufflepuffSld(overrides?: CallOverrides): Promise<string>;
+
     isApprovedForAll(
       owner: PromiseOrValue<string>,
       operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
+    isOwner(overrides?: CallOverrides): Promise<boolean>;
+
     name(overrides?: CallOverrides): Promise<string>;
+
+    names(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     ownerOf(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
 
-    price(
-      name: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    ravenclawColor(overrides?: CallOverrides): Promise<string>;
+
+    ravenclawSld(overrides?: CallOverrides): Promise<string>;
 
     records(
       arg0: PromiseOrValue<string>,
@@ -556,6 +737,7 @@ export interface HogwartsStudentsService extends BaseContract {
 
     register(
       name: PromiseOrValue<string>,
+      nonce: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -586,6 +768,10 @@ export interface HogwartsStudentsService extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    slytherinColor(overrides?: CallOverrides): Promise<string>;
+
+    slytherinSld(overrides?: CallOverrides): Promise<string>;
+
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
@@ -606,6 +792,13 @@ export interface HogwartsStudentsService extends BaseContract {
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    valid(
+      name: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    withdraw(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -665,6 +858,8 @@ export interface HogwartsStudentsService extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getAllNames(overrides?: CallOverrides): Promise<BigNumber>;
+
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -675,23 +870,37 @@ export interface HogwartsStudentsService extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    gryffindorColor(overrides?: CallOverrides): Promise<BigNumber>;
+
+    gryffindorSld(overrides?: CallOverrides): Promise<BigNumber>;
+
+    hufflepuffColor(overrides?: CallOverrides): Promise<BigNumber>;
+
+    hufflepuffSld(overrides?: CallOverrides): Promise<BigNumber>;
+
     isApprovedForAll(
       owner: PromiseOrValue<string>,
       operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    isOwner(overrides?: CallOverrides): Promise<BigNumber>;
+
     name(overrides?: CallOverrides): Promise<BigNumber>;
+
+    names(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     ownerOf(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    price(
-      name: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    ravenclawColor(overrides?: CallOverrides): Promise<BigNumber>;
+
+    ravenclawSld(overrides?: CallOverrides): Promise<BigNumber>;
 
     records(
       arg0: PromiseOrValue<string>,
@@ -700,6 +909,7 @@ export interface HogwartsStudentsService extends BaseContract {
 
     register(
       name: PromiseOrValue<string>,
+      nonce: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -730,6 +940,10 @@ export interface HogwartsStudentsService extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    slytherinColor(overrides?: CallOverrides): Promise<BigNumber>;
+
+    slytherinSld(overrides?: CallOverrides): Promise<BigNumber>;
+
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
@@ -748,6 +962,15 @@ export interface HogwartsStudentsService extends BaseContract {
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    valid(
+      name: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    withdraw(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
@@ -774,6 +997,8 @@ export interface HogwartsStudentsService extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    getAllNames(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -784,23 +1009,37 @@ export interface HogwartsStudentsService extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    gryffindorColor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    gryffindorSld(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    hufflepuffColor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    hufflepuffSld(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     isApprovedForAll(
       owner: PromiseOrValue<string>,
       operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    isOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    names(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     ownerOf(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    price(
-      name: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    ravenclawColor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    ravenclawSld(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     records(
       arg0: PromiseOrValue<string>,
@@ -809,6 +1048,7 @@ export interface HogwartsStudentsService extends BaseContract {
 
     register(
       name: PromiseOrValue<string>,
+      nonce: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -839,6 +1079,10 @@ export interface HogwartsStudentsService extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    slytherinColor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    slytherinSld(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
@@ -857,6 +1101,15 @@ export interface HogwartsStudentsService extends BaseContract {
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    valid(
+      name: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    withdraw(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

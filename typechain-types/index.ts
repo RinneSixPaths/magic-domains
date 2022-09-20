@@ -20,7 +20,5 @@ export type { ERC165 } from "./@openzeppelin/contracts/utils/introspection/ERC16
 export { ERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/ERC165__factory";
 export type { IERC165 } from "./@openzeppelin/contracts/utils/introspection/IERC165";
 export { IERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/IERC165__factory";
-export type { Domains } from "./contracts/Domains.sol/Domains";
-export { Domains__factory } from "./factories/contracts/Domains.sol/Domains__factory";
-export type { HogwartsStudentsService } from "./contracts/Domains.sol/HogwartsStudentsService";
-export { HogwartsStudentsService__factory } from "./factories/contracts/Domains.sol/HogwartsStudentsService__factory";
+export type { HogwartsStudentsService } from "./contracts/HogwartsStudentsService";
+export { HogwartsStudentsService__factory } from "./factories/contracts/HogwartsStudentsService__factory";
