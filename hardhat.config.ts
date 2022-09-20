@@ -8,8 +8,8 @@ const config: HardhatUserConfig = {
   solidity: '0.8.17',
   networks: {
     mumbai: {
-      url: '',
-      accounts: [''],
+      url: process.env.STAGING_ALCHEMY_KEY,
+      accounts: [process.env.PRIVATE_KEY as string],
     }
   }
 };
