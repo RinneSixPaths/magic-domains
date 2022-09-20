@@ -33,21 +33,15 @@ contract HogwartsStudentsService is ERC721URIStorage {
 
   mapping (string => address) public domains;
   mapping (string => string) public records;
+  mapping (address => bool) public domainTracker;
 
   mapping (uint => string) public names;
 
-  // TODO remove these and use require
-  error Unauthorized();
-  error AlreadyRegistered();
-  error InvalidName(string name);
+  event WelcomeToHogwarts(address indexed newcomer, string name, string faculty);
 
-  // TODO check if student already in hgwrts
-  // TODO emit an event after registration
-  // TODO rename functions
-  // TODO split register method
   // TODO fill up record with some meaningfull info
 
-  modifier onlyOwner() {
+  modifier onlyHeadmaster() {
     require(isOwner());
     _;
   }
@@ -84,11 +78,11 @@ contract HogwartsStudentsService is ERC721URIStorage {
     }
   }
 
-  function register(string calldata name, uint nonce) public payable {
+  function applyToHogwarts(string calldata name, uint nonce) public payable {
 
-    if (domains[name] != address(0)) revert AlreadyRegistered();
-    if (!valid(name)) revert InvalidName(name);
-
+    require(domains[name] == address(0), "Name already exists");
+    require(valid(name), "Invalid name");
+    require(!domainTracker[msg.sender], "Address already applied");
     require(msg.value >= price, "Not enough Matic paid");
 
     uint magicNumber = _getPseudoRand(nonce);
@@ -121,9 +115,12 @@ contract HogwartsStudentsService is ERC721URIStorage {
     _safeMint(msg.sender, newRecordId);
     _setTokenURI(newRecordId, finalTokenUri);
     domains[name] = msg.sender;
+    domainTracker[msg.sender] = true;
     names[newRecordId] = _name;
 
     _tokenIds.increment();
+
+    emit WelcomeToHogwarts(msg.sender, name, faculty);
   }
 
   function getAddress(string calldata name) public view returns (address) {
@@ -131,7 +128,7 @@ contract HogwartsStudentsService is ERC721URIStorage {
   }
 
   function setRecord(string calldata name, string calldata record) public {
-      if (msg.sender != domains[name]) revert Unauthorized();
+      require(msg.sender == domains[name], "No permission to modify the record");
 
       records[name] = record;
   }
@@ -150,7 +147,7 @@ contract HogwartsStudentsService is ERC721URIStorage {
     return allNames;
   }
 
-  function withdraw() public onlyOwner {
+  function withdraw() public onlyHeadmaster {
     uint amount = address(this).balance;
     
     (bool success, ) = msg.sender.call{ value: amount }("");

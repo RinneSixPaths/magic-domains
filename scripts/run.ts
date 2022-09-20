@@ -8,7 +8,7 @@ const main = async () => {
 
   console.log('Contract deployed to:', domainContract.address);
 
-  let txn = await domainContract.register(
+  let txn = await domainContract.applyToHogwarts(
     'RonWeasley',
     Math.floor(Math.random() * 100), 
     { value: hre.ethers.utils.parseEther('0.001') }

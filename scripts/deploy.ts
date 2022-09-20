@@ -5,7 +5,7 @@ const main = async () => {
   const domainContract = await domainContractFactory.deploy();
   await domainContract.deployed();
 
-  console.log('Contract deployed to:', domainContract.address);S
+  console.log('Contract deployed to:', domainContract.address);
 }
 
 const runMain = async () => {

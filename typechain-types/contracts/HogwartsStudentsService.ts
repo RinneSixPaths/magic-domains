@@ -30,8 +30,10 @@ import type {
 
 export interface HogwartsStudentsServiceInterface extends utils.Interface {
   functions: {
+    "applyToHogwarts(string,uint256)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
+    "domainTracker(address)": FunctionFragment;
     "domains(string)": FunctionFragment;
     "getAddress(string)": FunctionFragment;
     "getAllNames()": FunctionFragment;
@@ -49,7 +51,6 @@ export interface HogwartsStudentsServiceInterface extends utils.Interface {
     "ravenclawColor()": FunctionFragment;
     "ravenclawSld()": FunctionFragment;
     "records(string)": FunctionFragment;
-    "register(string,uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,bytes)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
@@ -67,8 +68,10 @@ export interface HogwartsStudentsServiceInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "applyToHogwarts"
       | "approve"
       | "balanceOf"
+      | "domainTracker"
       | "domains"
       | "getAddress"
       | "getAllNames"
@@ -86,7 +89,6 @@ export interface HogwartsStudentsServiceInterface extends utils.Interface {
       | "ravenclawColor"
       | "ravenclawSld"
       | "records"
-      | "register"
       | "safeTransferFrom(address,address,uint256)"
       | "safeTransferFrom(address,address,uint256,bytes)"
       | "setApprovalForAll"
@@ -103,11 +105,19 @@ export interface HogwartsStudentsServiceInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(
+    functionFragment: "applyToHogwarts",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "approve",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "balanceOf",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "domainTracker",
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
@@ -173,10 +183,6 @@ export interface HogwartsStudentsServiceInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "register",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
     functionFragment: "safeTransferFrom(address,address,uint256)",
     values: [
       PromiseOrValue<string>,
@@ -233,8 +239,16 @@ export interface HogwartsStudentsServiceInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "withdraw", values?: undefined): string;
 
+  decodeFunctionResult(
+    functionFragment: "applyToHogwarts",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "domainTracker",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "domains", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getAddress", data: BytesLike): Result;
   decodeFunctionResult(
@@ -279,7 +293,6 @@ export interface HogwartsStudentsServiceInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "records", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "register", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "safeTransferFrom(address,address,uint256)",
     data: BytesLike
@@ -319,11 +332,13 @@ export interface HogwartsStudentsServiceInterface extends utils.Interface {
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
+    "WelcomeToHogwarts(address,string,string)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "WelcomeToHogwarts"): EventFragment;
 }
 
 export interface ApprovalEventObject {
@@ -362,6 +377,19 @@ export type TransferEvent = TypedEvent<
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
+export interface WelcomeToHogwartsEventObject {
+  newcomer: string;
+  name: string;
+  faculty: string;
+}
+export type WelcomeToHogwartsEvent = TypedEvent<
+  [string, string, string],
+  WelcomeToHogwartsEventObject
+>;
+
+export type WelcomeToHogwartsEventFilter =
+  TypedEventFilter<WelcomeToHogwartsEvent>;
+
 export interface HogwartsStudentsService extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
@@ -389,6 +417,12 @@ export interface HogwartsStudentsService extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    applyToHogwarts(
+      name: PromiseOrValue<string>,
+      nonce: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     approve(
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
@@ -399,6 +433,11 @@ export interface HogwartsStudentsService extends BaseContract {
       owner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
+
+    domainTracker(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
 
     domains(
       arg0: PromiseOrValue<string>,
@@ -458,12 +497,6 @@ export interface HogwartsStudentsService extends BaseContract {
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[string]>;
-
-    register(
-      name: PromiseOrValue<string>,
-      nonce: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
 
     "safeTransferFrom(address,address,uint256)"(
       from: PromiseOrValue<string>,
@@ -527,6 +560,12 @@ export interface HogwartsStudentsService extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
+  applyToHogwarts(
+    name: PromiseOrValue<string>,
+    nonce: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   approve(
     to: PromiseOrValue<string>,
     tokenId: PromiseOrValue<BigNumberish>,
@@ -537,6 +576,11 @@ export interface HogwartsStudentsService extends BaseContract {
     owner: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
+
+  domainTracker(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
   domains(
     arg0: PromiseOrValue<string>,
@@ -596,12 +640,6 @@ export interface HogwartsStudentsService extends BaseContract {
     arg0: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<string>;
-
-  register(
-    name: PromiseOrValue<string>,
-    nonce: PromiseOrValue<BigNumberish>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
 
   "safeTransferFrom(address,address,uint256)"(
     from: PromiseOrValue<string>,
@@ -665,6 +703,12 @@ export interface HogwartsStudentsService extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    applyToHogwarts(
+      name: PromiseOrValue<string>,
+      nonce: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     approve(
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
@@ -675,6 +719,11 @@ export interface HogwartsStudentsService extends BaseContract {
       owner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    domainTracker(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     domains(
       arg0: PromiseOrValue<string>,
@@ -734,12 +783,6 @@ export interface HogwartsStudentsService extends BaseContract {
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<string>;
-
-    register(
-      name: PromiseOrValue<string>,
-      nonce: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     "safeTransferFrom(address,address,uint256)"(
       from: PromiseOrValue<string>,
@@ -834,9 +877,26 @@ export interface HogwartsStudentsService extends BaseContract {
       to?: PromiseOrValue<string> | null,
       tokenId?: PromiseOrValue<BigNumberish> | null
     ): TransferEventFilter;
+
+    "WelcomeToHogwarts(address,string,string)"(
+      newcomer?: PromiseOrValue<string> | null,
+      name?: null,
+      faculty?: null
+    ): WelcomeToHogwartsEventFilter;
+    WelcomeToHogwarts(
+      newcomer?: PromiseOrValue<string> | null,
+      name?: null,
+      faculty?: null
+    ): WelcomeToHogwartsEventFilter;
   };
 
   estimateGas: {
+    applyToHogwarts(
+      name: PromiseOrValue<string>,
+      nonce: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     approve(
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
@@ -845,6 +905,11 @@ export interface HogwartsStudentsService extends BaseContract {
 
     balanceOf(
       owner: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    domainTracker(
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -905,12 +970,6 @@ export interface HogwartsStudentsService extends BaseContract {
     records(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    register(
-      name: PromiseOrValue<string>,
-      nonce: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     "safeTransferFrom(address,address,uint256)"(
@@ -976,6 +1035,12 @@ export interface HogwartsStudentsService extends BaseContract {
   };
 
   populateTransaction: {
+    applyToHogwarts(
+      name: PromiseOrValue<string>,
+      nonce: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     approve(
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
@@ -984,6 +1049,11 @@ export interface HogwartsStudentsService extends BaseContract {
 
     balanceOf(
       owner: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    domainTracker(
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1044,12 +1114,6 @@ export interface HogwartsStudentsService extends BaseContract {
     records(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    register(
-      name: PromiseOrValue<string>,
-      nonce: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     "safeTransferFrom(address,address,uint256)"(
