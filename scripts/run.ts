@@ -10,6 +10,7 @@ const main = async () => {
 
   let txn = await domainContract.applyToHogwarts(
     'RonWeasley',
+    'Dog',
     Math.floor(Math.random() * 100), 
     { value: hre.ethers.utils.parseEther('0.001') }
   );

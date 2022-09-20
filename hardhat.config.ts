@@ -6,12 +6,12 @@ import '@nomicfoundation/hardhat-toolbox';
 
 const config: HardhatUserConfig = {
   solidity: '0.8.17',
-  // networks: {
-  //   mumbai: {
-  //     url: '',
-  //     accounts: [''],
-  //   }
-  // }
+  networks: {
+    mumbai: {
+      url: '',
+      accounts: [''],
+    }
+  }
 };
 
 export default config;
